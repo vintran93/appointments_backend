@@ -1,19 +1,18 @@
-class Api::V1::UsersController < ApplicationController
-  skip_before_action :authenticate_request
+class Api::V1::DoctorsController < ApplicationController
+  before_action :set_doctor, only: [:show]
   
-  def create
-    user = User.create(user_params)
-    if user.valid?
-      command = AuthenticateUser.call(params[:email], params[:password])
-      render json: { user: user, jwt: command.result, message: 'Account Created' }, status: :created
-    else
-      render json: { errors: user.errors.full_messages }, status: :not_acceptable
-    end
+  def index
+    @doctors = Doctor.all
+    render json: @doctors
+  end
+
+  def show
+    render json: @doctor
   end
 
   private
 
-  def user_params
-    params.permit(:name, :email, :password)
+  def set_doctor
+    @doctor = Doctor.find(params[:id])
   end
 end
