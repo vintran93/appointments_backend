@@ -1,51 +1,19 @@
-class DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show, :update, :destroy]
-
-  # GET /doctors
-  def index
-    @doctors = Doctor.all
-
-    render json: @doctors
-  end
-
-  # GET /doctors/1
-  def show
-    render json: @doctor
-  end
-
-  # POST /doctors
+class Api::V1::UsersController < ApplicationController
+  skip_before_action :authenticate_request
+  
   def create
-    @doctor = Doctor.new(doctor_params)
-
-    if @doctor.save
-      render json: @doctor, status: :created, location: @doctor
+    user = User.create(user_params)
+    if user.valid?
+      command = AuthenticateUser.call(params[:email], params[:password])
+      render json: { user: user, jwt: command.result, message: 'Account Created' }, status: :created
     else
-      render json: @doctor.errors, status: :unprocessable_entity
+      render json: { errors: user.errors.full_messages }, status: :not_acceptable
     end
-  end
-
-  # PATCH/PUT /doctors/1
-  def update
-    if @doctor.update(doctor_params)
-      render json: @doctor
-    else
-      render json: @doctor.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /doctors/1
-  def destroy
-    @doctor.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_doctor
-      @doctor = Doctor.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def doctor_params
-      params.require(:doctor).permit(:name, :education, :specialty, :experience, :image, :address)
-    end
+  def user_params
+    params.permit(:name, :email, :password)
+  end
 end

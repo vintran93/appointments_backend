@@ -1,30 +1,27 @@
-class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :update, :destroy]
+class Api::V1::AppointmentsController < ApplicationController
+  before_action :set_appointment, only: %i[show update destroy]
+  before_action :authorize_request
 
-  # GET /appointments
   def index
-    @appointments = Appointment.all
+    @appointments = @current_user.appointments
 
     render json: @appointments
   end
 
-  # GET /appointments/1
   def show
     render json: @appointment
   end
 
-  # POST /appointments
   def create
     @appointment = Appointment.new(appointment_params)
 
     if @appointment.save
-      render json: @appointment, status: :created, location: @appointment
+      render json: @appointment, status: :created
     else
       render json: @appointment.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /appointments/1
   def update
     if @appointment.update(appointment_params)
       render json: @appointment
@@ -33,19 +30,18 @@ class AppointmentsController < ApplicationController
     end
   end
 
-  # DELETE /appointments/1
   def destroy
     @appointment.destroy
+    render json: { message: 'Appointment deleted' }, status: :ok
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_appointment
-      @appointment = Appointment.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def appointment_params
-      params.require(:appointment).permit(:doctors, :users, :appointment_date)
-    end
+  def set_appointment
+    @appointment = Appointment.find(params[:id])
+  end
+
+  def appointment_params
+    params.permit(:user_id, :doctor_id, :appointment_date)
+  end
 end
