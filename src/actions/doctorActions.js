@@ -14,7 +14,6 @@ export const fetchDoctors = () => {
     return (dispatch) => {
         fetch(`${API_URL}api/v1/doctors`, { headers: authHeader() })
             .then(resp => resp.json())
-            // .then(doctors => console.log('fetchDoctors', doctors))
             .then(doctors => dispatch({ type: 'FETCH_DOCTORS', payload: doctors }))
             .catch(() => {
                 dispatch(setMessage('Unable to get doctors list'));
