@@ -9,10 +9,12 @@ function Doctor() {
     const { id } = useParams();
 
     useEffect(() => {
-        doctorActions.getDoctor(id)
+        doctorActions.fetchDoctor(id)
+            .then(resp => resp.json())
             .then(response => {
+                // console.log(response)
                 setLoading(false);
-                setDoctor(response.data);
+                setDoctor(response);
             },
                 error => {
                     setLoading(false);

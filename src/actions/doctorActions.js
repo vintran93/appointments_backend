@@ -1,15 +1,26 @@
-import authHeader from '../services/auth-header';
-import axios from 'axios';
+// import authHeader from '../services/auth-header';
+// import axios from 'axios';
 import { setMessage } from '../actions/message';
+import { authJWT, authHeader } from '../services/auth-header';
 
 const API_URL = 'http://localhost:3000/';
 
 
-const getDoctor = id => axios.get(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() });
-const getAppointments = id => axios.get(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() });
-const getAppointment = (userId, appointmentId) => axios.get(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
-const postAppointment = (userId, doctorId, appointmentDate) => axios.post(`${API_URL}/api/v1/users/${userId}/appointments`, { doctor_id: doctorId, appointment_date: appointmentDate }, { headers: authHeader() });
-const deleteAppointment = (userId, appointmentId) => axios.delete(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
+// const getDoctor = id => axios.get(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() });
+
+const fetchDoctor = (id) => fetch(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() })
+const getAppointments = id => fetch(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() });
+const getAppointment = (userId, appointmentId) => fetch(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
+
+const postAppointment = (userId, doctorId, appointmentDate) =>
+    fetch(`${API_URL}/api/v1/users/${userId}/appointments`, {
+        method: 'POST', headers: { 'Authorization': authJWT(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'doctor_id': doctorId, 'appointment_date': appointmentDate })
+    });
+
+
+
+const deleteAppointment = (userId, appointmentId) => fetch(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { method: 'DELETE', headers: authHeader() });
 
 export const fetchDoctors = () => {
     return (dispatch) => {
@@ -32,11 +43,12 @@ export const fetchAppointments = id => {
 }
 
 export const addDoctor = doctor => {
+    console.log(doctor)
     return (dispatch) => {
-        fetch(`${API_URL}/api/v1/doctors`, { headers: authHeader() }, {
+        fetch(`${API_URL}/api/v1/doctors`, {
             method: 'POST',
             body: JSON.stringify(doctor),
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Authorization': authJWT(), 'Content-Type': 'application/json' }
         })
             .then(resp => resp.json())
             .then(doctor => dispatch({ type: 'ADD_DOCTOR', payload: doctor }))
@@ -44,7 +56,7 @@ export const addDoctor = doctor => {
 }
 
 const doctorActions = {
-    getDoctor,
+    fetchDoctor,
     getAppointments,
     fetchAppointments,
     getAppointment,

@@ -15,9 +15,10 @@ function AppointmentsList({ appointments }) {
     useEffect(() => {
         if (currentUser) {
             doctorActions.getAppointments(currentUser.user.id)
+                .then(resp => resp.json())
                 .then(response => {
                     setLoading(false);
-                    setContent(response.data);
+                    setContent(response);
                 },
                     error => {
                         setLoading(false);

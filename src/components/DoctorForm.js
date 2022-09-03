@@ -23,12 +23,14 @@ class DoctorForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        console.log(this.state)
         this.props.addDoctor(this.state)
+        console.log('done')
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} style={{ marginLeft: '45px' }}>
                 <label>Name:</label>
                 <input type='text' value={this.state.name} onChange={this.handleChange} name='name' />
                 <br />
@@ -52,4 +54,12 @@ class DoctorForm extends Component {
     }
 }
 
-export default connect(null, { addDoctor })(DoctorForm);
+// export default connect(null, { addDoctor })(DoctorForm);
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addDoctor: (doctor) => dispatch(addDoctor(doctor))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(DoctorForm);

@@ -21,9 +21,10 @@ function Appointment() {
 
     useEffect(() => {
         doctorActions.getAppointment(currentUser.user.id, id)
+            .then(resp => resp.json())
             .then(response => {
-                setAppointment(response.data);
-                return response.data.doctor_id;
+                setAppointment(response);
+                return response.doctor_id;
             },
                 error => {
                     setLoading(false);
@@ -31,10 +32,11 @@ function Appointment() {
                     const message = (error.response);
                     setAppointment(message);
                 },
-            ).then(doctorId => doctorActions.getDoctor(doctorId))
+            ).then(doctorId => doctorActions.fetchDoctor(doctorId))
+            .then(resp => resp.json())
             .then(response => {
                 setLoading(false);
-                setDoctor(response.data);
+                setDoctor(response);
             });
     }, [currentUser.user.id, id]); // dependencies inside dependecy array; Run the side effect any time the variable(s) change
 
