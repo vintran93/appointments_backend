@@ -11,6 +11,7 @@ import Doctor from './components/Doctor';
 import AppointmentsContainer from './components/AppointmentsContainer';
 import Appointment from './components/Appointment';
 import NewAppointment from './components/NewAppointment';
+import DoctorForm from './components/DoctorForm';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/doctors" element={<DoctorsContainer />} />
           <Route path="/doctors/:id" element={<Doctor />} />
+          <Route path="/doctorForm" element={<DoctorForm />} />
           <Route path="/appointments" element={<AppointmentsContainer />} />
           <Route path="/appointments/new" element={<NewAppointment />} />
           <Route path="/appointments/:id" element={<Appointment />} />

@@ -45,7 +45,7 @@ function NewAppointment(props) {
             dispatch(fetchDoctors())
             setLoadingDoctors(false);
         }
-    }, [currentUser, doctorId, props.doctors, dispatch]);
+    }, [currentUser, doctorId, props.doctors, dispatch]); // no dependency array reruns on every render
 
     const onChangeDoctorId = e => {
         const doctorId = e.target.value;

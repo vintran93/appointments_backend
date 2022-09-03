@@ -4,15 +4,16 @@ import { setMessage } from '../actions/message';
 
 const API_URL = 'http://localhost:3000/';
 
-const getDoctor = id => axios.get(`${API_URL}api/v1/doctors/${id}`, { headers: authHeader() });
-const getAppointments = id => axios.get(`${API_URL}api/v1/users/${id}/appointments`, { headers: authHeader() });
-const getAppointment = (userId, appointmentId) => axios.get(`${API_URL}api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
-const postAppointment = (userId, doctorId, appointmentDate) => axios.post(`${API_URL}api/v1/users/${userId}/appointments`, { doctor_id: doctorId, appointment_date: appointmentDate }, { headers: authHeader() });
-const deleteAppointment = (userId, appointmentId) => axios.delete(`${API_URL}api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
+
+const getDoctor = id => axios.get(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() });
+const getAppointments = id => axios.get(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() });
+const getAppointment = (userId, appointmentId) => axios.get(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
+const postAppointment = (userId, doctorId, appointmentDate) => axios.post(`${API_URL}/api/v1/users/${userId}/appointments`, { doctor_id: doctorId, appointment_date: appointmentDate }, { headers: authHeader() });
+const deleteAppointment = (userId, appointmentId) => axios.delete(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
 
 export const fetchDoctors = () => {
     return (dispatch) => {
-        fetch(`${API_URL}api/v1/doctors`, { headers: authHeader() })
+        fetch(`${API_URL}/api/v1/doctors`, { headers: authHeader() })
             .then(resp => resp.json())
             .then(doctors => dispatch({ type: 'FETCH_DOCTORS', payload: doctors }))
             .catch(() => {
@@ -23,10 +24,22 @@ export const fetchDoctors = () => {
 
 export const fetchAppointments = id => {
     return (dispatch) => {
-        fetch(`${API_URL}api/v1/users/${id}/appointments`, { headers: authHeader() })
+        fetch(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() })
             .then(resp => resp.json())
             // .then(appointments => console.log('fetchAppointments', appointments))
             .then(appointments => dispatch({ type: 'FETCH_APPOINTMENTS', payload: appointments }))
+    }
+}
+
+export const addDoctor = doctor => {
+    return (dispatch) => {
+        fetch(`${API_URL}/api/v1/doctors`, { headers: authHeader() }, {
+            method: 'POST',
+            body: JSON.stringify(doctor),
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(resp => resp.json())
+            .then(doctor => dispatch({ type: 'ADD_DOCTOR', payload: doctor }))
     }
 }
 

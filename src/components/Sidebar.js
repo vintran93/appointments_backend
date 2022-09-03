@@ -43,6 +43,11 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/doctorForm" className={classes.navlink} activeClassName={classes.active}>
+                                Create Doctor
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink exact to="/appointments" className={classes.navlink} activeClassName={classes.active}>
                                 Appointments
                             </NavLink>
