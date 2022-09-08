@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :doctors, only: [:index, :show]
+      resources :doctors, only: [:create, :index, :show]
       resources :users, only: [:create] do 
         resources :appointments
       end
