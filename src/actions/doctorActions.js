@@ -1,26 +1,21 @@
-// import authHeader from '../services/auth-header';
-// import axios from 'axios';
 import { setMessage } from '../actions/message';
 import { authJWT, authHeader } from '../services/auth-header';
 
 const API_URL = 'http://localhost:3000/';
 
-
-// const getDoctor = id => axios.get(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() });
-
 const fetchDoctor = (id) => fetch(`${API_URL}/api/v1/doctors/${id}`, { headers: authHeader() })
-const getAppointments = id => fetch(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() });
 const getAppointment = (userId, appointmentId) => fetch(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { headers: authHeader() });
-
-const postAppointment = (userId, doctorId, appointmentDate) =>
-    fetch(`${API_URL}/api/v1/users/${userId}/appointments`, {
+const postAppointment = (userId, doctorId, appointmentDate) => {
+    return fetch(`${API_URL}/api/v1/users/${userId}/appointments`, {
         method: 'POST', headers: { 'Authorization': authJWT(), 'Content-Type': 'application/json' },
         body: JSON.stringify({ 'doctor_id': doctorId, 'appointment_date': appointmentDate })
     });
+}
 
-
-
-const deleteAppointment = (userId, appointmentId) => fetch(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`, { method: 'DELETE', headers: authHeader() });
+const deleteAppointment = (userId, appointmentId) => {
+    return fetch(`${API_URL}/api/v1/users/${userId}/appointments/${appointmentId}`,
+        { method: 'DELETE', headers: authHeader() });
+}
 
 export const fetchDoctors = () => {
     return (dispatch) => {
@@ -35,9 +30,9 @@ export const fetchDoctors = () => {
 
 export const fetchAppointments = id => {
     return (dispatch) => {
+        console.log('here')
         fetch(`${API_URL}/api/v1/users/${id}/appointments`, { headers: authHeader() })
             .then(resp => resp.json())
-            // .then(appointments => console.log('fetchAppointments', appointments))
             .then(appointments => dispatch({ type: 'FETCH_APPOINTMENTS', payload: appointments }))
     }
 }
@@ -57,7 +52,6 @@ export const addDoctor = doctor => {
 
 const doctorActions = {
     fetchDoctor,
-    getAppointments,
     fetchAppointments,
     getAppointment,
     postAppointment,

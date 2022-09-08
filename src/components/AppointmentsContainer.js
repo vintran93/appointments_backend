@@ -27,5 +27,13 @@ const mapStateToProps = state => {
     return { currentUser: state.auth }
 }
 
-export default connect(mapStateToProps, { fetchAppointments })(AppointmentsContainer)
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAppointments: (id) => dispatch(fetchAppointments(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppointmentsContainer);
+
+// export default connect(mapStateToProps, { fetchAppointments })(AppointmentsContainer)
 

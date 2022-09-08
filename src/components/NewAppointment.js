@@ -64,6 +64,7 @@ function NewAppointment(props) {
 
         if (checkBtn.current.context._errors.length === 0) {
             doctorActions.postAppointment(currentUser.user.id, doctorId, appointmentDate)
+                .then(resp => resp.json())
                 .then(() => {
                     setLoading(false);
                     setSuccessful(true);

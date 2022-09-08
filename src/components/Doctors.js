@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import classes from '../styles/Doctors.module.css';
 import { connect } from 'react-redux';
+// import { fetchDoctors } from '../actions/doctorActions';
 
 const DoctorsList = ({ doctors }) => {
 
@@ -85,3 +86,11 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(DoctorsList);
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         fetchDoctors: () => dispatch(fetchDoctors())
+//     }
+// }
+
+// export default connect(null, mapDispatchToProps)(DoctorsList);

@@ -31,6 +31,7 @@ class DoctorForm extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} style={{ marginLeft: '45px' }}>
+                <h2>Create a Doctor</h2>
                 <label>Name:</label>
                 <input type='text' value={this.state.name} onChange={this.handleChange} name='name' />
                 <br />
@@ -48,13 +49,12 @@ class DoctorForm extends Component {
                 <br />
                 <label>Address:</label>
                 <input type='text' value={this.state.address} onChange={this.handleChange} name='address' />
+                <br /><br />
                 <input type='submit' value='Create Doctor' />
             </form>
         )
     }
 }
-
-// export default connect(null, { addDoctor })(DoctorForm);
 
 const mapDispatchToProps = dispatch => {
     return {
