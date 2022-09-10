@@ -1,5 +1,5 @@
 class Api::V1::DoctorsController < ApplicationController
-  before_action :set_doctor, only: [:show]
+  before_action :set_doctor, only: %i[show update destroy]
   
   def index
     @doctors = Doctor.all
@@ -18,6 +18,11 @@ class Api::V1::DoctorsController < ApplicationController
 
   def show
     render json: @doctor
+  end
+
+  def destroy
+    @doctor.destroy
+    render json: { message: 'Doctor deleted' }, status: :ok
   end
 
   private
