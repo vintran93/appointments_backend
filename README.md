@@ -1,24 +1,32 @@
-# README
+## Doctor Appointment Scheduling App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app is a single-page, full stack web application (SPA) where users can search doctors, add new doctors, book, and delete appointments.
+It utilizes Ruby on Rails with a PostgreSQL database on the back-end, and React.js and Redux on the front-end.
 
-Things you may want to cover:
+## Live Link
 
-* Ruby version
+Try out the live version [here](https://vintran93.github.io/appointments_client/).
 
-* System dependencies
+## Frontend
 
-* Configuration
+Check out the React JS frontend [here](https://github.com/vintran93/appointments_client).
 
-* Database creation
+## Built With
 
-* Database initialization
+* HTML
+* CSS
+* React JS
+* Ruby on Rails
 
-* How to run the test suite
+## Possible features to add
+* Navigation map
+* Search bar
+* Comments and ratings for each doctor
+* Profile update buttons
 
-* Services (job queues, cache servers, search engines, etc.)
+## Acknowledgements 
+Inspired by [alishabab](https://github.com/alishabab/appointment-booking-frontend)
 
-* Deployment instructions
+## License
 
-* ...
+This project is [MIT](https://opensource.org/licenses/MIT) licensed @ [vintran93]
